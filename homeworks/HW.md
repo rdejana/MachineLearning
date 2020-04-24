@@ -37,7 +37,7 @@ $ virtualenv -p python3 ./tflite
  ```
  $ pip3 install pip testresources setuptools
  $ pip3 install https://dl.google.com/coral/python/tflite_runtime-2.1.0.post1-cp36-cp36m-linux_aarch64.whl
- $ pip3 install Pillow
+ $ pip3 install Pillow numpy
  ```
 ### Tensorflow 1.15
 1. Create a 
