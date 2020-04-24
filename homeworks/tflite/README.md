@@ -10,6 +10,10 @@ python3 classify_image.py \
   --labels models/imagenet_labels.txt \
   --input images/parrot.jpg
 ```
+To see all available options, run
+```
+python3 classify_image.py
+```
 
 ## Models
 The following models come with this lab:
