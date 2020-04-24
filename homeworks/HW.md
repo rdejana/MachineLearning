@@ -66,9 +66,7 @@ In this part, you'll run a simple image classificaiton example against a sample 
 ``` 
 For each of the following models:
 - efficientnet-L_quant.tflite
-- efficientnet-M_float.tflite
 - efficientnet-M_quant.tflite
-- efficientnet-S_float.tflite
 - efficientnet-S_quant.tflite
 - inception_v4_299_quant.tflite
 - mobilenet_v1_1.0_224_quant.tflite
