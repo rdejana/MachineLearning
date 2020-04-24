@@ -21,24 +21,24 @@ $ sudo pip3 install -U virtualenv # system-wide install
 
 ### TFLite
 1. Create a TFLite python3 virtualenv in your /data directory. 
-``
+```
 $ cd /data
 $ mkdir virtualenvs
 $ cd virtualenvs
 $ virtualenv -p python3 ./tflite
-``
+```
  If you /data directory is owned by root, create using sudo, `sudo mkdir virtualenvs` and then change ownership to your id, `sudo chown -R $USER:$USER virtualenvs`
  2. Activate virtual enviroment.  This is importand as TFLite will only be available when using this virtual environment. 
- ``
+ ```
  $ source /data/virtualenvs/tflite/bin/activate
- ``
+ ```
  3. Install TFLite runtime and additional components. 
  Open https://www.tensorflow.org/lite/guide/python and look for the latest version that supports ARM 64 at your version of python.  Currently this is https://dl.google.com/coral/python/tflite_runtime-2.1.0.post1-cp36-cp36m-linux_aarch64.whl
- ``
+ ```
  $ pip3 install pip testresources setuptools
  $ pip3 install https://dl.google.com/coral/python/tflite_runtime-2.1.0.post1-cp36-cp36m-linux_aarch64.whl
  $ pip3 install Pillow
- ``
+ ```
 ### Tensorflow 1.15
 1. Create a 
 ### Tensorflow 2.x
