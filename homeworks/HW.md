@@ -23,16 +23,19 @@ $ sudo apt-get install python3-pip
 ```
 $ sudo pip3 install -U virtualenv # system-wide install
 ```
-
-### TFLite
-1. Create a TFLite python3 virtualenv in your /data directory. 
+4. Create the virtualenv directory under /data
 ```
 $ cd /data
 $ mkdir virtualenvs
-$ cd virtualenvs
+```
+
+ If you /data directory is owned by root, create using sudo, `sudo mkdir virtualenvs` and then change ownership to your id, `sudo chown -R $USER:$USER virtualenvs`
+### TFLite
+1. Create a TFLite python3 virtualenv in your /data directory. 
+```
+$ cd /data/virtualenvs
 $ virtualenv -p python3 ./tflite
 ```
- If you /data directory is owned by root, create using sudo, `sudo mkdir virtualenvs` and then change ownership to your id, `sudo chown -R $USER:$USER virtualenvs`
  2. Activate virtual enviroment.  This is importand as TFLite will only be available when using this virtual environment. 
  ```
  $ source /data/virtualenvs/tflite/bin/activate
@@ -40,16 +43,34 @@ $ virtualenv -p python3 ./tflite
  3. Install TFLite runtime and additional components. 
  Open https://www.tensorflow.org/lite/guide/python and look for the latest version that supports ARM 64 at your version of python.  Currently this is https://dl.google.com/coral/python/tflite_runtime-2.1.0.post1-cp36-cp36m-linux_aarch64.whl
  ```
- (tflite) $ pip3 install pip testresources setuptools
- (tflite) $ pip3 install https://dl.google.com/coral/python/tflite_runtime-2.1.0.post1-cp36-cp36m-linux_aarch64.whl
- (tflite) $ pip3 install Pillow numpy
+ pip3 install testresources setuptools
+ pip3 install https://dl.google.com/coral/python/tflite_runtime-2.1.0.post1-cp36-cp36m-linux_aarch64.whl
+ pip3 install Pillow numpy
  ```
  4. Deactivate virtualenv
  ```
- (tflite) $ deactiate
+ deactiate
  ```
 ### Tensorflow 1.15
-1. TBD
+1. Create a TF 1.15 python3 virtualenv in your /data directory. 
+```
+$ cd /data/virtualenvs
+$ virtualenv -p python3 ./tf115
+```
+2. . Activate virtual enviroment.  This is importand as TF 1.15 will only be available when using this virtual environment. 
+ ```
+ $ source /data/virtualenvs/tf115/bin/activate
+ ```
+3. Install TF 1.15 runtime and additional components.
+```
+pip3 install  testresources setuptools
+pip3 install -U numpy==1.16.1 future==0.17.1 mock==3.0.5 h5py==2.9.0 keras_preprocessing==1.0.5 keras_applications==1.0.8 gast==0.2.2 futures protobuf pybind11
+pip3 install --pre --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v43 'tensorflow<2'
+pip3 install --upgrade tensorflow-hub
+pip3 install Pillow
+```
+Full instructions may be found at https://docs.nvidia.com/deeplearning/frameworks/install-tf-jetson-platform/index.html
+
 ### Tensorflow 2.x
 ### Jetson Inference
 
