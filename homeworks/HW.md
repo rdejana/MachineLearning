@@ -64,7 +64,7 @@ $ virtualenv -p python3 ./tf115
 3. Install TF 1.15 runtime and additional components.
 ```
 pip3 install  testresources setuptools
-pip3 install -U numpy==1.16.1 future==0.17.1 mock==3.0.5 h5py==2.9.0 keras_preprocessing==1.0.5 keras_applications==1.0.8 gast==0.2.2 futures protobuf pybind11
+pip3 install numpy==1.16.1 future==0.17.1 mock==3.0.5 h5py==2.9.0 keras_preprocessing==1.0.5 keras_applications==1.0.8 gast==0.2.2 futures protobuf pybind11
 pip3 install --pre --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v43 'tensorflow<2'
 pip3 install --upgrade tensorflow-hub
 pip3 install Pillow
@@ -98,6 +98,26 @@ using the test image `images/parrot.jpg` and your test images.
 ### Questions
 1. What was the average inference time for model and image combination?  What where the returned classes their score?
 2. In your optionion, which model is best and why?
+
+## Part 2: TensorFlow 1.15
+
+This classifier downloads models from TensorFlow Hub.  Downloads are not cached and are redowned with each run.
+
+
+Test with the following, passing the URL as the -m parameter
+- mobilenet_v1_100_224 URL: https://tfhub.dev/google/imagenet/mobilenet_v1_100_224/classification/4
+- 
+
+- https://tfhub.dev/google/efficientnet/b0/classification/
+- https://tfhub.dev/google/efficientnet/b4/classification/
+- https://tfhub.dev/google/efficientnet/b7/classification/
+
+For the EfficientNet models, please read the Usage section carefully. 
+
+If you are seeing memory errors when running, run the flush_buffers.sh script located in the tf115 directory. 
+```
+sudo sh flush_buffers.sh
+```
 ## TBD
 For each framework (Ryan note, provide TFLite exmample and a basic TF 1.15 one), you'll need to write a program that performs image classification with an image. The program should take arguments for the model, labels file, image, the number of times to run interence, the max number of classification results, and the classification score threshold. It then prints the model's prediction for what the image is to the terminal screen.
 See the example for TFLite.  
