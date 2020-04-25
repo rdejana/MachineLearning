@@ -231,7 +231,7 @@ Be sure to use the test image `images/parrot.jpg` and your test images.
 8. What was the average inference time for model and image combination?  What where the returned classes their score?
 
 
-### Conclusion
+### Final Questions
 9. In your own words, what is quanization? What is effect on peformance and accuracy?
 10. In your option, which framework was best?  Why?
 
