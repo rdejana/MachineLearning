@@ -99,7 +99,7 @@ def main():
       help='Number of times to run inference')
 
     parser.add_argument(
-      '-h', '--height', type=int, default=299,
+      '--height', type=int, default=299,
       help='height of image')
     parser.add_argument(
       '-w', '--width', type=int, default=299,
