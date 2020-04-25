@@ -222,7 +222,7 @@ The first time your run with a new model, it will take some time to process it.
 ```
 python3 imagenet-console.py --network=googlenet images/parrot.jpg out.jpg
 ```
-4. Write a python program that performs image classificaiton example against the sample image and your classification test images.  You'll need to run against each of the downloaded models, running the classification at least 5 times, returning the (up to) top 5 results.  Use `imagenet-console.py` as an example. 
+4. Write a python program that performs image classificaiton example against the sample image and your classification test images.  You'll need to run against each of the downloaded models, running the classification at least 5 times. Use `imagenet-console.py` as an example. 
 
 Be sure to use the test image `images/parrot.jpg` and your test images.
 

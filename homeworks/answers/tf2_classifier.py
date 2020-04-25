@@ -67,20 +67,26 @@ def runClass(classifier_url,image,runCount,k,threshold):
         predicted_class = np.argmax(result[0], axis=-1)
 
     imagenet_labels = np.array(open(labels_path).read().splitlines())
-   
+    # some of the TF Models, e.g. efficientnet, assume the second line is index 0.
+    # so we need to adjust
+    offset = 0
+    if resultLength < len(imagenet_labels):
+        offset = 1
+        predicted_class = predicted_class + 1
 
     classes =  get_output(result[0],k,threshold)
     print("")
     print('Label: Confidence')
     
     for klass in classes:
-        print('%s: %.5f' % (imagenet_labels[klass.id],klass.score))
+        pc = klass.id + offset
+        print('%s: %.5f' % (imagenet_labels[pc],klass.score))
 
     return
 
 
 def main():
-    print("TF 1.15 testing")
+    print("TF 2 testing")
     parser = argparse.ArgumentParser(
       formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument(
