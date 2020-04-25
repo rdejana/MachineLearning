@@ -22,7 +22,7 @@
 #
 
 APP_TITLE="Hello AI World (jetson-inference)"
-OUTPUT_DIR="data/networks"
+OUTPUT_DIR="networks"
 LOG="[jetson-inference] "
 WGET_QUIET="--quiet"
 BUILD_INTERACTIVE=$1
