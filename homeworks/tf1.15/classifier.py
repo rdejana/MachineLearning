@@ -38,7 +38,11 @@ def runClass(classifier_url,image,runCount,k,threshold):
         IMAGE_SHAPE = (224, 224)
         classifier = tf.keras.Sequential([
         hub.KerasLayer(classifier_url, input_shape=IMAGE_SHAPE+(3,))])
-
+    elif ("inception_v3" in classifier_url):
+        print("Mobilenet detected, using url and not module")
+        IMAGE_SHAPE = (299, 299)
+        classifier = tf.keras.Sequential([    
+        hub.KerasLayer(classifier_url, input_shape=IMAGE_SHAPE+(3,))])
     else:
         module = hub.Module(classifier_url)
         height, width = hub.get_expected_image_size(module)
@@ -63,11 +67,11 @@ def runClass(classifier_url,image,runCount,k,threshold):
         predicted_class = np.argmax(result[0], axis=-1)
 
     imagenet_labels = np.array(open(labels_path).read().splitlines())
+    
     offset = 0
-    if resultLength < len(imagenet_labels):
-    #print("using an offset") 
-        offset = 1
-        predicted_class = predicted_class + 1
+    #if resultLength < len(imagenet_labels):
+    #    offset = 1
+    #    predicted_class = predicted_class + 1
 
     classes =  get_output(result[0],k,threshold)
     print("")
@@ -75,14 +79,13 @@ def runClass(classifier_url,image,runCount,k,threshold):
     
     for klass in classes:
         pc = klass.id + offset
-        #print("class id",klass.id)
         print('%s: %.5f' % (imagenet_labels[pc],klass.score))
 
     return
 
 
 def main():
-    print("TF 1.5 testing")
+    print("TF 1.15 testing")
     parser = argparse.ArgumentParser(
       formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument(
