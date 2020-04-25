@@ -161,9 +161,9 @@ This classifier downloads models from TensorFlow Hub.  Downloads are not cached 
 Test with the following, passing the URL as the -m parameter
 - mobilenet_v1_100_224 URL: https://tfhub.dev/google/imagenet/mobilenet_v1_100_224/classification/4
 - mobilenet_v2_130_224 URL: https://tfhub.dev/google/imagenet/mobilenet_v2_130_224/classification/4 
-- efficientnet b0 URL: https://tfhub.dev/google/efficientnet/b0/classification/
-- efficientnet b4 URL: https://tfhub.dev/google/efficientnet/b4/classification/
-- efficientnet b7 URL: https://tfhub.dev/google/efficientnet/b7/classification/
+- efficientnet b0 URL: https://tfhub.dev/google/efficientnet/b0/classification/1
+- efficientnet b4 URL: https://tfhub.dev/google/efficientnet/b4/classification/1
+- efficientnet b7 URL: https://tfhub.dev/google/efficientnet/b7/classification/1
 
 using the test image `images/parrot.jpg` and your test images.
 
@@ -195,9 +195,9 @@ You'll need to find another way to set the imput image dimensions.  The required
 Test with the following, passing the URL as the -m parameter
 - mobilenet_v1_100_224 URL: https://tfhub.dev/google/imagenet/mobilenet_v1_100_224/classification/4
 - mobilenet_v2_130_224 URL: https://tfhub.dev/google/imagenet/mobilenet_v2_130_224/classification/4 
-- efficientnet b0 URL: https://tfhub.dev/google/efficientnet/b0/classification/
-- efficientnet b4 URL: https://tfhub.dev/google/efficientnet/b4/classification/
-- efficientnet b7 URL: https://tfhub.dev/google/efficientnet/b7/classification/
+- efficientnet b0 URL: https://tfhub.dev/google/efficientnet/b0/classification/1
+- efficientnet b4 URL: https://tfhub.dev/google/efficientnet/b4/classification/1
+- efficientnet b7 URL: https://tfhub.dev/google/efficientnet/b7/classification/1
 
 using the test image `images/parrot.jpg` and your test images.
 

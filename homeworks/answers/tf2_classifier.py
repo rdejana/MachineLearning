@@ -28,29 +28,22 @@ def get_output(scores, top_k=1, score_threshold=0.0):
   return sorted(classes, key=operator.itemgetter(1),reverse=True)
 
 #simple way to start
-def runClass(classifier_url,image,runCount,k,threshold):
+def runClass(classifier_url,image,runCount,k,threshold,height,width):
     # number of classes to return
     k = 1
+    IMAGE_SHAPE = (height, width)
     # setup the path to the labels
     labels_path = tf.keras.utils.get_file('ImageNetLabels.txt','https://storage.googleapis.com/download.tensorflow.org/data/ImageNetLabels.txt')
     if ("mobilenet_v" in classifier_url):
-        print("Mobilenet detected, using url and not module")
+        #print("Mobilenet detected, using url and not module")
         IMAGE_SHAPE = (224, 224)
-        classifier = tf.keras.Sequential([
-        hub.KerasLayer(classifier_url, input_shape=IMAGE_SHAPE+(3,))])
+        
     elif ("inception_v3" in classifier_url):
-        print("Inception_v3 detected, using url and not module")
+        #print("Inception_v3 detected, using url and not module")
         IMAGE_SHAPE = (299, 299)
-        classifier = tf.keras.Sequential([    
+   
+    classifier = tf.keras.Sequential([
         hub.KerasLayer(classifier_url, input_shape=IMAGE_SHAPE+(3,))])
-    else:
-        module = hub.Module(classifier_url)
-        height, width = hub.get_expected_image_size(module)
-        # this call does not work with tf2.  You'll need to input the shape from the commandline
-        IMAGE_SHAPE = (height, width)
-        classifier = tf.keras.Sequential([
-            hub.KerasLayer(module, input_shape=IMAGE_SHAPE+(3,))])
-    
     # setup for probability vs raw scores
     probability_model = tf.keras.Sequential([classifier, 
                                          tf.keras.layers.Softmax()])
@@ -105,9 +98,15 @@ def main():
       '-c', '--count', type=int, default=5,
       help='Number of times to run inference')
 
+    parser.add_argument(
+      '-h', '--height', type=int, default=299,
+      help='height of image')
+    parser.add_argument(
+      '-w', '--width', type=int, default=299,
+      help='width of image')
     args = parser.parse_args()
     
-    runClass(args.model,args.image,args.count,args.top_k,args.threshold)
+    runClass(args.model,args.image,args.count,args.top_k,args.threshold,args.height,args.width)
 
 
 if __name__ == '__main__':

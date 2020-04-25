@@ -44,9 +44,12 @@ def runClass(classifier_url,image,runCount,k,threshold):
         classifier = tf.keras.Sequential([    
         hub.KerasLayer(classifier_url, input_shape=IMAGE_SHAPE+(3,))])
     else:
+        # WHen running with TF2, hub.Module and hub.get_expected_image_size(module) haven't worked
+        # for me.  Look at how mobilenet is used if usng TF 2.
+        # Also think about to get the image sizes passed in.
         module = hub.Module(classifier_url)
         height, width = hub.get_expected_image_size(module)
-        # this call does not work with tf2.  You'll need to input the shape from the commandline
+        
         IMAGE_SHAPE = (height, width)
         classifier = tf.keras.Sequential([
             hub.KerasLayer(module, input_shape=IMAGE_SHAPE+(3,))])
