@@ -3,6 +3,10 @@
 ## Overview
 This Homework will compare image classificaiton inference performance with Tensorflow 1.15, Tensorflow 2, TFLite, and Jetson Inference.  Note, this is not currently containerized.
 
+## Reading
+- https://www.tensorflow.org/lite/performance/post_training_quantization
+- https://devblogs.nvidia.com/speeding-up-deep-learning-inference-using-tensorrt/
+
 ## Framework installation
 
 ## Classification images
@@ -113,10 +117,8 @@ Note, if your permissions prevent creating a directory under /data, run the foll
 sudo git clone --recursive https://github.com/dusty-nv/jetson-inference
 sudo chown -R $USER:$USER jetson-inference
 ```
-When promopted for model downloads, select at least 4 models and take note of which ones.
-See https://github.com/dusty-nv/jetson-inference/blob/master/docs/building-repo-2.md for additional details
+Don't worry about which models are downloaded as you'll be downloading later on.
 
-Once your build is complete, run through the python example https://github.com/dusty-nv/jetson-inference/blob/master/docs/imagenet-console-2.md to make sure everything is working correctly.  Be sure to run with python3.
 
 ## Assignment 
 Clone this repository to your TX2.  
@@ -206,10 +208,22 @@ sudo sh flush_buffers.sh
 6. Compare the performance of TF2 to TF 1.15
 
 ## Part 4: Jetson Inference.
-Write a python program that performs image classificaiton example against the sample image and your classification test images.  You'll need to run against each of the supplied models, running the classification at least 5 times, returning the (up to) top 5 results. 
+In this part, you'll work with Jeton Inference.  
+
 
 1. cd to jetsoninference
-2. Write your classifier.  Use  imagenet-console.py as an example. 
+2. Down load at least 4 classifcation models and take note of which ones.  This is done via the following command
+```
+./download-models.sh YES
+```
+You only need to download classification modesl. 
+3. Run the test program to verify that jetson inference is working correctly.  Be sure to run with python3.
+The first time your run with a new model, it will take some time to process it.
+```
+python3 imagenet-console.py --network=googlenet images/parrot.jpg out.jpg
+```
+4. Write a python program that performs image classificaiton example against the sample image and your classification test images.  You'll need to run against each of the downloaded models, running the classification at least 5 times, returning the (up to) top 5 results.  Use `imagenet-console.py` as an example. 
+
 Be sure to use the test image `images/parrot.jpg` and your test images.
 
 ### Questions
@@ -218,8 +232,8 @@ Be sure to use the test image `images/parrot.jpg` and your test images.
 
 
 ### Conclusion
-9. What is quanization? What is effect on classification?
-10.  In your option, which framework was best?  Why?
+9. In your own words, what is quanization? What is effect on peformance and accuracy?
+10. In your option, which framework was best?  Why?
 
 ## What to submit
 - Your answers to all questions
