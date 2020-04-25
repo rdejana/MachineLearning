@@ -217,12 +217,29 @@ In this part, you'll work with Jeton Inference.
 ```
 ./download-models.sh YES
 ```
-You only need to download classification modesl. 
+You only need to download classification models. If possible, it is easier to download all the classification and choose which ones to test. 
 3. Run the test program to verify that jetson inference is working correctly.  Be sure to run with python3.
 The first time your run with a new model, it will take some time to process it.
 ```
 python3 imagenet-console.py --network=googlenet images/parrot.jpg out.jpg
 ```
+
+Classification Networks
+
+| Network       | CLI argument   | NetworkType enum |
+| --------------|----------------|------------------|
+| AlexNet       | `alexnet`      | `ALEXNET`        |
+| GoogleNet     | `googlenet`    | `GOOGLENET`      |
+| GoogleNet-12  | `googlenet-12` | `GOOGLENET_12`   |
+| ResNet-18     | `resnet-18`    | `RESNET_18`      |
+| ResNet-50     | `resnet-50`    | `RESNET_50`      |
+| ResNet-101    | `resnet-101`   | `RESNET_101`     |
+| ResNet-152    | `resnet-152`   | `RESNET_152`     |
+| VGG-16        | `vgg-16`       | `VGG-16`         |
+| VGG-19        | `vgg-19`       | `VGG-19`         |
+| Inception-v4  | `inception-v4` | `INCEPTION_V4`   |
+
+
 4. Write a python program that performs image classificaiton example against the sample image and your classification test images.  You'll need to run against each of the downloaded models, running the classification at least 5 times. Use `imagenet-console.py` as an example. 
 
 Be sure to use the test image `images/parrot.jpg` and your test images.
