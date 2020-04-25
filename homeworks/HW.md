@@ -8,6 +8,7 @@ This Homework will compare image classificaiton inference performance with Tenso
 - https://devblogs.nvidia.com/speeding-up-deep-learning-inference-using-tensorrt/
 
 ## Framework installation
+When running on a TX2, run `sudo jetson_clocks` to improve performance.
 
 ## Classification images
 Find at least 3 images on your own to use for classification.  
