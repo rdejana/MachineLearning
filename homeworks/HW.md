@@ -72,13 +72,57 @@ pip3 install Pillow
 Full instructions may be found at https://docs.nvidia.com/deeplearning/frameworks/install-tf-jetson-platform/index.html
 
 ### Tensorflow 2.x
+1. Create a TF 1.15 python3 virtualenv in your /data directory. 
+```
+$ cd /data/virtualenvs
+$ virtualenv -p python3 ./tf2
+```
+2. . Activate virtual enviroment.  This is importand as TF 2 will only be available when using this virtual environment. 
+ ```
+ $ source /data/virtualenvs/tf2/bin/activate
+ ```
+3. Install TF 1.15 runtime and additional components.
+```
+pip3 install  testresources setuptools
+pip3 install numpy==1.16.1 future==0.17.1 mock==3.0.5 h5py==2.9.0 keras_preprocessing==1.0.5 keras_applications==1.0.8 gast==0.2.2 futures protobuf pybind11
+pip3 install --pre --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v43 
+pip3 install --upgrade tensorflow-hub
+pip3 install Pillow
+```
+Full instructions may be found at https://docs.nvidia.com/deeplearning/frameworks/install-tf-jetson-platform/index.html
+
 ### Jetson Inference
+
+Here's a condensed form of the commands to download, build, and install the project:
+```
+cd /data
+sudo apt-get update
+sudo apt-get install git cmake libpython3-dev python3-numpy
+git clone --recursive https://github.com/dusty-nv/jetson-inference
+cd jetson-inference
+mkdir build
+cd build
+cmake ../
+make -j$(nproc)
+sudo make install
+sudo ldconfig
+
+```
+Note, if your permissions prevent creating a directory under /data, run the folloing instead of the git clone.
+```
+sudo git clone --recursive https://github.com/dusty-nv/jetson-inference
+sudo chown -R $USER:$USER jetson-inference
+```
+When promopted for model downloads, select at least 4 models and take note of which ones.
+See https://github.com/dusty-nv/jetson-inference/blob/master/docs/building-repo-2.md for additional details
+
+Once your build is complete, run through the python example https://github.com/dusty-nv/jetson-inference/blob/master/docs/imagenet-console-2.md to make sure everything is working correctly.  Be sure to run with python3.
 
 ## Assignment 
 Clone this repository to your TX2.  
 
 ## Part 1: TFLite
-In this part, you'll run a simple image classificaiton example against a sample image and your classification test images.  You'll need to run against each of the supplied models, returning the (up to) top 5 results.
+In this part, you'll run a simple image classificaiton example against a sample image and your classification test images.  You'll need to run against each of the supplied models, running the classification at least 5 times, returning the (up to) top 5 results.
 1. Enable your tflite virtualenv.
 2. cd to tflite.
 3. Run to following 
@@ -97,20 +141,28 @@ using the test image `images/parrot.jpg` and your test images.
 
 ### Questions
 1. What was the average inference time for model and image combination?  What where the returned classes their score?
-2. In your optionion, which model is best and why?
+2. In your opinion, which model is best and why?
 
 ## Part 2: TensorFlow 1.15
+In this part, you'll run a simple image classificaiton example against a sample image and your classification test images.  You'll need to run against each of the supplied models, running the classification at least 5 times, returning the (up to) top 5 results.
+
+1. Enable your tf115 virtualenv
+2. cd to tf1.15
+3. Run the following
+```
+    python3 classifier.py -m <modelURL> -i <image>
+```
 
 This classifier downloads models from TensorFlow Hub.  Downloads are not cached and are redowned with each run.
 
-
 Test with the following, passing the URL as the -m parameter
 - mobilenet_v1_100_224 URL: https://tfhub.dev/google/imagenet/mobilenet_v1_100_224/classification/4
-- 
+- mobilenet_v2_130_224 URL: https://tfhub.dev/google/imagenet/mobilenet_v2_130_224/classification/4 
+- efficientnet b0 URL: https://tfhub.dev/google/efficientnet/b0/classification/
+- efficientnet b4 URL: https://tfhub.dev/google/efficientnet/b4/classification/
+- efficientnet b7 URL: https://tfhub.dev/google/efficientnet/b7/classification/
 
-- https://tfhub.dev/google/efficientnet/b0/classification/
-- https://tfhub.dev/google/efficientnet/b4/classification/
-- https://tfhub.dev/google/efficientnet/b7/classification/
+using the test image `images/parrot.jpg` and your test images.
 
 For the EfficientNet models, please read the Usage section carefully. 
 
@@ -118,11 +170,61 @@ If you are seeing memory errors when running, run the flush_buffers.sh script lo
 ```
 sudo sh flush_buffers.sh
 ```
-## TBD
-For each framework (Ryan note, provide TFLite exmample and a basic TF 1.15 one), you'll need to write a program that performs image classification with an image. The program should take arguments for the model, labels file, image, the number of times to run interence, the max number of classification results, and the classification score threshold. It then prints the model's prediction for what the image is to the terminal screen.
-See the example for TFLite.  
+### Questions
+3. Did the EfficientNet models return the correct classifiction?  If not why, and how would you fix this?
+4. How big (in megabytes) are the models? 
+5. How did the performance compare to TFLite?  Be sure to through out the first run as it includes downloading.
 
-what to test...
+## Part 3: TensorFlow 2
+Repeat the same tests you did for TF 1.15.  You'll want to copy the `classifier.py` file from the tf1.15 directory.
+1. Enable your tf115 virtualenv
+2. cd to tf2
+3. cp ../tf1.15/classifier.py ./
+4. Update classifier.py to work with TF 2.
+Please note, TF 2 does not support the tfhub call 
+```
+IMAGE_SHAPE = (height, width)
+        classifier = tf.keras.Sequential([
+            hub.KerasLayer(module, input_shape=IMAGE_SHAPE+(3,))])
+```
+You'll need to find another way to set the imput image dimensions.  The required values may be found at the model's URL.
 
-## Problems
-1. What does it mean to quantize a model?
+Test with the following, passing the URL as the -m parameter
+- mobilenet_v1_100_224 URL: https://tfhub.dev/google/imagenet/mobilenet_v1_100_224/classification/4
+- mobilenet_v2_130_224 URL: https://tfhub.dev/google/imagenet/mobilenet_v2_130_224/classification/4 
+- efficientnet b0 URL: https://tfhub.dev/google/efficientnet/b0/classification/
+- efficientnet b4 URL: https://tfhub.dev/google/efficientnet/b4/classification/
+- efficientnet b7 URL: https://tfhub.dev/google/efficientnet/b7/classification/
+
+using the test image `images/parrot.jpg` and your test images.
+
+If you are seeing memory errors when running, run the flush_buffers.sh script located in the tf115 directory. 
+```
+sudo sh flush_buffers.sh
+```
+### Questions
+6. Compare the performance of TF2 to TF 1.15
+
+## Part 4: Jetson Inference.
+Write a python program that performs image classificaiton example against the sample image and your classification test images.  You'll need to run against each of the supplied models, running the classification at least 5 times, returning the (up to) top 5 results. 
+
+1. cd to jetsoninference
+2. Write your classifier.  Use  imagenet-console.py as an example. 
+Be sure to use the test image `images/parrot.jpg` and your test images.
+
+### Questions
+7. What models did you use?
+8. What was the average inference time for model and image combination?  What where the returned classes their score?
+
+
+### Conclusion
+9. What is quanization? What is effect on classification?
+10.  In your option, which framework was best?  Why?
+
+## What to submit
+- Your answers to all questions
+- Your test images
+- Any updates you made to the TF 1.15 classifer.
+- Your TF 2.0 classifer.
+- Your Jetson Inference classifer
+

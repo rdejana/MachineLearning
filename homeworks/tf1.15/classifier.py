@@ -39,7 +39,7 @@ def runClass(classifier_url,image,runCount,k,threshold):
         classifier = tf.keras.Sequential([
         hub.KerasLayer(classifier_url, input_shape=IMAGE_SHAPE+(3,))])
     elif ("inception_v3" in classifier_url):
-        print("Mobilenet detected, using url and not module")
+        print("Inception_v3 detected, using url and not module")
         IMAGE_SHAPE = (299, 299)
         classifier = tf.keras.Sequential([    
         hub.KerasLayer(classifier_url, input_shape=IMAGE_SHAPE+(3,))])
